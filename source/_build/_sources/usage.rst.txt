@@ -1,0 +1,20 @@
+Usage of MyProject
+==================
+
+This section provides a guide on how to use MyProject.
+
+Getting Started
+---------------
+
+To get started with MyProject, first import the module:
+
+.. code-block:: python
+
+   import my_module
+
+Then you can create an instance of MyClass:
+
+.. code-block:: python
+
+   my_obj = my_module.MyClass()
+

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Usage of the Project &#8212; Big Data Project Task 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api_reference.html" />
+    <link rel="prev" title="NYC Taxi dataset - exploration with Spark" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="usage-of-the-project">
+<h1>Usage of the Project<a class="headerlink" href="#usage-of-the-project" title="Link to this heading">¶</a></h1>
+<p>This section provides a comprehensive guide on utilizing the functionalities of the project.</p>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
+<p>To begin working with the project, you should first establish the necessary paths within the <cite>constants.py</cite> module.</p>
+<p><strong>Configuring Hadoop Extensions with Spark:</strong></p>
+<p>If you plan to use Hadoop extensions with Spark, the following steps are necessary:</p>
+<ol class="arabic">
+<li><p>Winutils is required. You can download it and place it in the <cite>hadoop/bin</cite> directory on your disk.</p></li>
+<li><p>In the Windows environment variables, you need to set the <cite>HADOOP_HOME</cite> variable:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>HADOOP_HOME = path/to/your/hadoop
+</pre></div>
+</div>
+</li>
+<li><p>Add <cite>%HADOOP_HOME%/bin</cite> to your Windows system’s path.</p></li>
+</ol>
+<p><strong>Preparing the Data:</strong></p>
+<p>Before you begin data exploration, you need to prepare the data:</p>
+<ol class="arabic simple">
+<li><p>Execute the <cite>data_preparer.py</cite> script. Ensure that the path settings in <cite>constants.py</cite> are correctly configured before running this script.</p></li>
+</ol>
+<p><strong>Utilizing the DataExplorer Class:</strong></p>
+<p>Once the data preparation is complete, you can start using the <cite>DataExplorer</cite> class.</p>
+<p>Here’s an example of how to use the <cite>DataExplorer</cite> class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">app.data_reader</span> <span class="kn">import</span> <span class="n">DataReader</span>
+<span class="kn">from</span> <span class="nn">app.eda</span> <span class="kn">import</span> <span class="n">DataExplorer</span>
+
+<span class="c1"># read the data</span>
+<span class="n">df_trip</span> <span class="o">=</span> <span class="n">DataReader</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;F:/parquet_sample/trip&#39;</span><span class="p">)</span>
+<span class="n">df_fare</span> <span class="o">=</span> <span class="n">DataReader</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;F:/parquet_sample/fare&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the DataExplorer</span>
+<span class="n">explorer</span> <span class="o">=</span> <span class="n">DataExplorer</span><span class="p">(</span><span class="n">df_trip</span><span class="o">=</span><span class="n">df_trip</span><span class="p">,</span>
+                        <span class="n">df_fare</span><span class="o">=</span><span class="n">df_fare</span><span class="p">)</span>
+
+<span class="c1"># Example method call</span>
+<span class="n">hourly_avg_pd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_explorer</span><span class="o">.</span><span class="n">average_speed_from_day_hour</span><span class="p">()</span>
+
+<span class="c1"># visualization of generated data</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hourly_avg_pd</span><span class="p">[</span><span class="s1">&#39;hour_of_day&#39;</span><span class="p">],</span> <span class="n">hourly_avg_pd</span><span class="p">[</span><span class="s1">&#39;avg_time_per_mile&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Average Time per Mile vs. Hour of Day&#39;</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Hour of Day&#39;</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Average Time per Mile (seconds)&#39;</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For detailed instructions and information on the available methods, please refer to the API Reference section.</p>
+<p><strong>Further notices</strong></p>
+<p>Pay attention that in the unit_test files all the paths are hardcoded. You should change them before running the tests.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Big Data Project Task</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage of the Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">NYC Taxi dataset - exploration with Spark</a></li>
+      <li>Next: <a href="api_reference.html" title="next chapter">API Reference</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, The author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/structure_and_usage.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
